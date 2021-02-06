@@ -832,7 +832,8 @@ public final class PlaybackStats {
    * {@link #getRebufferRate()}. Note that this may return {@link Float#POSITIVE_INFINITY}.
    */
   public float getMeanTimeBetweenRebuffers() {
-    return 1f / getRebufferRate();
+    float rebufferRate = getRebufferRate();
+    return rebufferRate > 0 ?  1f / rebufferRate : 0;
   }
 
   /**
