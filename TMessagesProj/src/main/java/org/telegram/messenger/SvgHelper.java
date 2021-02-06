@@ -54,6 +54,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -270,6 +271,8 @@ public class SvgHelper {
         try (FileInputStream stream = new FileInputStream(file)) {
             SAXParserFactory spf = SAXParserFactory.newInstance();
             SAXParser sp = spf.newSAXParser();
+            sp.setProperty("http://xml.org/sax/features/external-general-entities", false);
+            sp.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
             XMLReader xr = sp.getXMLReader();
             SVGHandler handler = new SVGHandler(width, height, white, false);
             xr.setContentHandler(handler);
