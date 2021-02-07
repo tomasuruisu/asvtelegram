@@ -92,6 +92,7 @@ public class SvgHelper {
     private static class RoundRect {
         RectF rect;
         float rx;
+
         public RoundRect(RectF rect, float rx) {
             this.rect = rect;
             this.rx = rx;
@@ -337,7 +338,7 @@ public class SvgHelper {
             canvas.scale(width / (float) svgWidth, height / (float) svgHeight);
             Paint paint = new Paint();
             paint.setColor(Color.WHITE);
-            canvas.drawPath(path,paint);
+            canvas.drawPath(path, paint);
             return bitmap;
         } catch (Exception e) {
             FileLog.e(e);
@@ -525,19 +526,9 @@ public class SvgHelper {
                     if (prevCmd == 'm' || prevCmd == 'M') {
                         cmd = (char) (((int) prevCmd) - 1);
                         break;
-                    } else if (prevCmd == 'c' || prevCmd == 'C') {
-                        cmd = prevCmd;
-                        break;
-                    } else if (prevCmd == 'l' || prevCmd == 'L') {
-                        cmd = prevCmd;
-                        break;
-                    } else if (prevCmd == 's' || prevCmd == 'S') {
-                        cmd = prevCmd;
-                        break;
-                    } else if (prevCmd == 'h' || prevCmd == 'H') {
-                        cmd = prevCmd;
-                        break;
-                    } else if (prevCmd == 'v' || prevCmd == 'V') {
+                    } else if (prevCmd == 'c' || prevCmd == 'C' || prevCmd == 'l' || prevCmd == 'L'
+                            || prevCmd == 's' || prevCmd == 'S' || prevCmd == 'h' || prevCmd == 'H'
+                            || prevCmd == 'v' || prevCmd == 'V') {
                         cmd = prevCmd;
                         break;
                     }
