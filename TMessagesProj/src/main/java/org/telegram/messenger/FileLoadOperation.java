@@ -17,6 +17,7 @@ import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.File;
 import java.nio.channels.FileChannel;
@@ -842,13 +843,7 @@ public class FileLoadOperation {
                     cacheFilePreload = null;
                     try {
                         if (preloadStream != null) {
-                            try {
-                                preloadStream.getChannel().close();
-                            } catch (Exception e) {
-                                FileLog.e(e);
-                            }
-                            preloadStream.close();
-                            preloadStream = null;
+                            closePreloadStream();
                         }
                     } catch (Exception e) {
                         FileLog.e(e);
@@ -1098,13 +1093,7 @@ public class FileLoadOperation {
         }
         try {
             if (preloadStream != null) {
-                try {
-                    preloadStream.getChannel().close();
-                } catch (Exception e) {
-                    FileLog.e(e);
-                }
-                preloadStream.close();
-                preloadStream = null;
+               closePreloadStream();
             }
         } catch (Exception e) {
             FileLog.e(e);
@@ -1935,6 +1924,16 @@ public class FileLoadOperation {
             }, null, null, flags, isCdn ? cdnDatacenterId : datacenterId, connectionType, isLast);
             requestsCount++;
         }
+    }
+
+    private void closePreloadStream() {
+        try {
+            preloadStream.getChannel().close();
+            preloadStream.close();
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+        preloadStream = null;
     }
 
     public void setDelegate(FileLoadOperationDelegate delegate) {
